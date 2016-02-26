@@ -29,9 +29,14 @@ def evolution(double x, double y, double alpha, double beta, double s,
     Performs a full evolution, starting from (x, y)
     '''
     cdef int it
+    cdef double xold, yold
+    xold = x
+    yold = y
     for it in range(itmax):
-        x += dt * get_vx(x, y, alpha, beta, s)
-        y += dt * get_vy(x, y, alpha, beta, s)
+        x = xold + dt * get_vx(xold, yold, alpha, beta, s)
+        y = yold + dt * get_vy(xold, yold, alpha, beta, s)
+        xold = x
+        yold = y
     return x, y
 
 
