@@ -16,16 +16,30 @@ def velocity(x, y, alpha, beta, s, J):
     vy = - y + 1.0 / (1.0 + numpy.exp(- beta * ((1.0 - alpha) * s - J * x)))
     return vx, vy
 
+def sep_trial(x, y, x0, y0, beta):
+    a = (1.0 - y0) / (1.0 - x0)
+    b = (y0 - x0) / (1.0 - x0)
+    c = y0 / x0
+    sep = (a * x + b) / (1.0 + numpy.exp(- beta * (x0 - x))) + c * x / (1.0 + numpy.exp(- beta * (x - x0)))
+    return sep
+
+def sigmo(x, alpha, beta, s, J):
+    sigmo = 1.0 / (1.0 + numpy.exp(- beta * ((1.0 - alpha) * s - J * x)))
+    return sigmo
+
+def reciprosigmo(x, alpha, beta, s, J):
+    reciprosigmo = 1.0 / J * (alpha * s - 1.0 / beta * numpy.log(x / (1.0 - x)))
+    return reciprosigmo
 
 # parameters
-beta = 18.0
-s = 0.2
+beta = 5.0
+s = 1.4
 J = 1.0
-alpha = 0.3
+alpha = 0.5
 
 # time parameters
-dt = 1e-3
-tmax = 20.0
+dt = 1e-4
+tmax = 35.0
 itmax = int(tmax / dt + 0.5)
 
 # grid initialization
